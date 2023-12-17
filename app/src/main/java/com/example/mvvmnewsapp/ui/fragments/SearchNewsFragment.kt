@@ -81,6 +81,8 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
         viewModel.searchNews.observe(viewLifecycleOwner, Observer { response ->
             when(response){
                 is Resource.Success -> {
+                    binding.rvSearchNews.visibility = View.VISIBLE
+                    binding.llNoNewsAvailable.visibility = View.INVISIBLE
                     hideProgressBar()
                     response.data?.let { newsResponse ->
                         newsAdapter.differ.submitList(newsResponse.articles.toList())
@@ -94,6 +96,8 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
 
                 is Resource.Error -> {
                     hideProgressBar()
+                    binding.rvSearchNews.visibility = View.INVISIBLE
+                    binding.llNoNewsAvailable.visibility = View.VISIBLE
                     response.message?.let { message ->
                         Toast.makeText(activity, "An error occured: $message", Toast.LENGTH_LONG).show()
                     }

@@ -46,12 +46,22 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
         viewModel = (activity as NewsActivity).viewModel
         setUpRecyclerView()
 
+        viewModel.getSavedNews().observe(viewLifecycleOwner, Observer {
+            if(it.isEmpty()){
+                binding.rvSavedNews.visibility = View.INVISIBLE
+                binding.llNoSavedNews.visibility = View.VISIBLE
+            } else {
+                binding.rvSavedNews.visibility = View.VISIBLE
+                binding.llNoSavedNews.visibility = View.INVISIBLE
+            }
+        })
+
         newsAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
                 putSerializable("article", it)
             }
             findNavController().navigate(
-                R.id.action_searchNewsFragment_to_articleFragment,
+                R.id.action_savedNewsFragment_to_articleFragment,
                 bundle
             )
         }
@@ -65,7 +75,7 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean {  // we do not need this for this project
-                return true;
+                return true
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {

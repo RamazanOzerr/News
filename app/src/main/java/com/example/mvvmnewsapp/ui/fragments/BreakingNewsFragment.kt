@@ -67,6 +67,8 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         viewModel.breakingNews.observe(viewLifecycleOwner, Observer { response ->
             when(response){
                 is Resource.Success -> {
+                    binding.constraintBreakingNews.visibility = View.VISIBLE
+                    binding.llNoBreakingNews.visibility = View.INVISIBLE
                     hideProgressBar()
                     response.data?.let { newsResponse ->
                         newsAdapter.differ.submitList(newsResponse.articles.toList())
@@ -80,6 +82,8 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
                 is Resource.Error -> {
                     hideProgressBar()
+                    binding.constraintBreakingNews.visibility = View.INVISIBLE
+                    binding.llNoBreakingNews.visibility = View.VISIBLE
                     response.message?.let { message ->
                         Toast.makeText(activity, "An error occured: $message", Toast.LENGTH_LONG).show()
                     }
