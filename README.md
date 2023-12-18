@@ -29,7 +29,7 @@ This is a Kotlin-based Android news app that provides users with the latest news
 - Android Studio: Download and Install
 ## Installation
 - Clone the repository:
-- git clone https://github.com/your-username/news-app.git
+- git clone https://github.com/RamazanOzerr/NewsApp
 - Open the project in Android Studio.
 
 Build and run the app on an emulator or a physical device.
